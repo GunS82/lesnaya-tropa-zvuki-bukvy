@@ -363,20 +363,28 @@
     ui.el("exercise").innerHTML = ui.alphabetFillHtml(ex);
   }
 
-  function onPickOrder(index, node) {
+  function onPickOrder(node) {
+    var bank = document.getElementById("order-bank");
+    var target = document.getElementById("order-built");
+    if (!bank || !target) return;
+    if (node.parentNode === bank) target.appendChild(node);
+    else if (node.parentNode === target) bank.appendChild(node);
+    ui.syncOrderDisplay();
+  }
+
+  function onCheckOrder() {
     var ex = playing();
-    if (node.classList.contains("is-used")) return;
-    var value = ui.view.orderBank[Number(index)];
-    ui.view.orderChosen.push(value);
-    node.classList.add("is-used");
-    document.getElementById("order-built").textContent = ui.view.orderChosen.join(" → ");
-    if (ui.view.orderChosen.length < ex.answer.length) return;
-    if (game.checkAlphabetOrder(ex, ui.view.orderChosen)) { afterStepSuccess(); return; }
-    ui.fail(ex, document.getElementById("order-built"), "Сравни слова по алфавиту. Если буквы совпадают, смотри следующую.");
-    ui.view.orderChosen = [];
-    var chips = document.querySelectorAll("#order-bank .chip");
-    for (var i = 0; i < chips.length; i += 1) chips[i].classList.remove("is-used");
-    document.getElementById("order-built").textContent = "Нажми первое слово";
+    var target = document.getElementById("order-built");
+    var chips = target.querySelectorAll(".chip");
+    var chosen = Array.prototype.map.call(chips, function (chip) {
+      return chip.getAttribute("data-value");
+    });
+    if (chosen.length !== ex.answer.length) {
+      ui.fail(ex, target, "Перетащи сюда все слова, затем проверь порядок.");
+      return;
+    }
+    if (game.checkAlphabetOrder(ex, chosen)) { afterStepSuccess(); return; }
+    ui.fail(ex, target, "Сравни слова по алфавиту. Если буквы совпадают, смотри следующую.");
   }
 
   function onCipherLetter(value, node) {
@@ -509,7 +517,10 @@
         onFillLetter(btn.getAttribute("data-value"), btn);
         break;
       case "pick-order":
-        onPickOrder(btn.getAttribute("data-index"), btn);
+        onPickOrder(btn);
+        break;
+      case "check-order":
+        onCheckOrder();
         break;
       case "cipher-letter":
         onCipherLetter(btn.getAttribute("data-value"), btn);

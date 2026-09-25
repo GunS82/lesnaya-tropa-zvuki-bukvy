@@ -236,6 +236,10 @@
   };
 
   Renderer.prototype.renderPlaying = function () {
+    if (this.orderSortables) {
+      this.orderSortables.forEach(function (sortable) { sortable.destroy(); });
+      this.orderSortables = null;
+    }
     var parent = this.game.exercise(this.view.id);
     var steps = this.game.currentSteps();
     var step = steps ? steps[this.view.step] : parent;
@@ -259,6 +263,23 @@
     html += this.renderByType(step);
     this.el("exercise").innerHTML = html;
     this.bindSceneImages(this.el("exercise"));
+    this.bindOrderDrag(step);
+  };
+
+  Renderer.prototype.bindOrderDrag = function (exercise) {
+    if (exercise.type !== "alphabetOrder" || !global.Sortable) return;
+    var self = this;
+    var options = { group: "alphabet-words", draggable: ".chip", animation: 150, onSort: function () { self.syncOrderDisplay(); } };
+    this.orderSortables = [
+      global.Sortable.create(this.el("order-bank"), options),
+      global.Sortable.create(this.el("order-built"), options)
+    ];
+  };
+
+  Renderer.prototype.syncOrderDisplay = function () {
+    var box = this.el("order-built");
+    var note = this.el("order-placeholder");
+    if (box && note) note.hidden = Boolean(box.querySelector(".chip"));
   };
 
   Renderer.prototype.renderByType = function (exercise) {
@@ -445,16 +466,16 @@
 
   Renderer.prototype.renderAlphabetOrder = function (exercise) {
     this.view.orderBank = ForestGame.shuffle(exercise.items.slice());
-    this.view.orderChosen = [];
     var common = 0;
     while (exercise.items.every(function (word) {
       return word.length > common && word[common].toLowerCase() === exercise.items[0][common].toLowerCase();
     })) common += 1;
-    return this.titleBlock(exercise) + '<div class="built-sentence" id="order-built" aria-live="polite">Нажми первое слово</div>' +
+    return this.titleBlock(exercise) + '<p class="order-help">Перетащи карточки вниз или нажми их в нужном порядке.</p>' +
+      '<div class="built-sentence order-target" id="order-built" aria-live="polite"><span id="order-placeholder">Поставь слова сюда</span></div>' +
       '<div class="word-bank" id="order-bank">' + this.view.orderBank.map(function (item, index) {
         var face = escapeHtml(item.slice(0, common)) + '<mark>' + escapeHtml(item[common] || "") + '</mark>' + escapeHtml(item.slice(common + 1));
-        return '<button type="button" class="chip" data-action="pick-order" data-index="' + index + '">' + face + '</button>';
-      }).join("") + '</div>';
+        return '<button type="button" class="chip" data-action="pick-order" data-index="' + index + '" data-value="' + escapeHtml(item) + '">' + face + '</button>';
+      }).join("") + '</div><div class="check-row"><button type="button" class="btn btn-primary" data-action="check-order">Готово</button></div>';
   };
 
   Renderer.prototype.renderAlphabetCipher = function (exercise) {

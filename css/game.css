@@ -50,6 +50,11 @@
 .alphabet-gap strong { color: #b34b19; }
 .sound-word { text-transform: uppercase; }
 #order-bank mark { padding: 0 2px; border-radius: 4px; background: #f6d56f; color: #234b2c; }
+.order-help { margin: 6px 0 10px; text-align: center; color: #5c4630; }
+.order-target { min-height: 88px; }
+#order-built .chip { cursor: grab; touch-action: none; }
+#order-built .chip:active { cursor: grabbing; }
+#order-placeholder { color: #806e55; font-size: 18px; font-weight: 400; }
 
 .split-letters {
   display: flex;
