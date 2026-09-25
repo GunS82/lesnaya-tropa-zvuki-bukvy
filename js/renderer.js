@@ -424,7 +424,7 @@
     this.view.selected = [];
     return this.titleBlock(exercise) +
       '<div class="answers" id="sound-options">' + exercise.options.map(function (sound) {
-        return '<button type="button" class="answer" data-action="toggle-found-sound" data-value="' + escapeHtml(sound) + '">' + escapeHtml(sound) + '</button>';
+        return '<button type="button" class="answer" aria-pressed="false" data-action="toggle-found-sound" data-value="' + escapeHtml(sound) + '">' + escapeHtml(sound) + '</button>';
       }).join("") + '</div><div class="check-row"><button type="button" class="btn btn-primary" data-action="check-sounds">Готово</button></div>';
   };
 
@@ -496,7 +496,7 @@
     return this.titleBlock(exercise) + '<div class="word-hero">ТОПОТ ↔ ТОПОТ</div>' +
       '<p class="exercise-question">Бонус: какие слова одинаково читаются слева направо и справа налево?</p>' +
       '<div class="answers" id="palindrome-options">' + exercise.bonus.options.map(function (word) {
-        return '<button type="button" class="answer" data-action="toggle-palindrome" data-value="' + escapeHtml(word) + '">' + escapeHtml(word) + '</button>';
+        return '<button type="button" class="answer" aria-pressed="false" data-action="toggle-palindrome" data-value="' + escapeHtml(word) + '">' + escapeHtml(word) + '</button>';
       }).join("") + '</div><div class="check-row">' +
       '<button type="button" class="btn btn-primary" data-action="check-palindromes">Проверить</button>' +
       '<button type="button" class="btn btn-ghost" data-action="skip-palindromes">Пропустить бонус</button></div>';
@@ -763,7 +763,7 @@
         .map(function (option) {
           var label = option.label || "";
           return (
-            '<button type="button" class="scene-choice answer" data-action="toggle-scene" data-value="' +
+            '<button type="button" class="scene-choice answer" aria-pressed="false" data-action="toggle-scene" data-value="' +
             escapeHtml(option.id) +
             '">' +
             self.miniScene(option.scene, label || option.id) +

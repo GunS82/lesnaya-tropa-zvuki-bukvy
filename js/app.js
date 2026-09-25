@@ -291,9 +291,11 @@
     if (at === -1) {
       selected.push(value);
       node.classList.add("is-selected");
+      node.setAttribute("aria-pressed", "true");
     } else {
       selected.splice(at, 1);
       node.classList.remove("is-selected");
+      node.setAttribute("aria-pressed", "false");
     }
     ui.view.selected = selected;
   }
@@ -332,8 +334,8 @@
   function onToggleSound(value, node) {
     var selected = ui.view.selected;
     var at = selected.indexOf(value);
-    if (at < 0) { selected.push(value); node.classList.add("is-selected"); }
-    else { selected.splice(at, 1); node.classList.remove("is-selected"); }
+    if (at < 0) { selected.push(value); node.classList.add("is-selected"); node.setAttribute("aria-pressed", "true"); }
+    else { selected.splice(at, 1); node.classList.remove("is-selected"); node.setAttribute("aria-pressed", "false"); }
   }
 
   function onCheckSounds() {
@@ -436,8 +438,8 @@
   function onTogglePalindrome(value, node) {
     var list = ui.view.bonusSelected;
     var at = list.indexOf(value);
-    if (at < 0) { list.push(value); node.classList.add("is-selected"); }
-    else { list.splice(at, 1); node.classList.remove("is-selected"); }
+    if (at < 0) { list.push(value); node.classList.add("is-selected"); node.setAttribute("aria-pressed", "true"); }
+    else { list.splice(at, 1); node.classList.remove("is-selected"); node.setAttribute("aria-pressed", "false"); }
   }
 
   function onCheckPalindromes() {

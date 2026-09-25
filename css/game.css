@@ -378,8 +378,11 @@
 
 .sentence-card.is-selected,
 .pair-item.is-selected,
-.token.is-selected {
+.token.is-selected,
+.answer.is-selected,
+.scene-choice.is-selected {
   outline: 4px solid #f0c14b;
+  outline-offset: 1px;
   background: #fff4cc;
 }
 
