@@ -1,0 +1,7 @@
+Image/
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+.idea/
+.vscode/

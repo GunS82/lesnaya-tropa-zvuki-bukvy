@@ -1,0 +1,491 @@
+:root {
+  --forest: #2d5a3d;
+  --forest-deep: #1e3d2f;
+  --moss: #3d6b4f;
+  --leaf: #7aa35a;
+  --paper: #f7f0e1;
+  --paper-2: #efe2c6;
+  --ink: #2a2118;
+  --muted: #6b5846;
+  --wood: #6b4423;
+  --wood-light: #c9a56e;
+  --gold: #e6a817;
+  --rust: #c45c26;
+  --sky: #8ec4d4;
+  --sky-2: #f3d7a3;
+  --subject: #2b6cb0;
+  --predicate: #c53030;
+  --secondary: #6b4423;
+  --shadow: 0 18px 40px rgba(30, 40, 20, 0.28);
+  --radius: 24px;
+  --font-ui: "Comfortaa", "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+  --font-text: "Literata", Georgia, "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--forest-deep);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.forest-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.18), transparent 22%),
+    linear-gradient(#7eb8c9, #d9b778 42%, #3d6b4f 70%, #2a4a32 100%);
+}
+
+.forest-bg .hills {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 18%;
+  height: 38%;
+  background:
+    radial-gradient(120% 80% at 20% 100%, #2f5a3c 40%, transparent 42%),
+    radial-gradient(90% 70% at 70% 100%, #244a32 42%, transparent 44%),
+    radial-gradient(100% 80% at 100% 100%, #326044 40%, transparent 42%);
+}
+
+.forest-bg .trees {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  background-image:
+    radial-gradient(circle at 8% 70%, #1c3a28 18px, transparent 19px),
+    radial-gradient(circle at 12% 62%, #245034 34px, transparent 35px),
+    radial-gradient(circle at 22% 78%, #1a3324 22px, transparent 23px),
+    radial-gradient(circle at 78% 68%, #1c3a28 28px, transparent 29px),
+    radial-gradient(circle at 88% 58%, #274e36 40px, transparent 41px),
+    radial-gradient(circle at 96% 76%, #183224 20px, transparent 21px);
+}
+
+.forest-bg .ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16%;
+  background: linear-gradient(#5a3a22, #3a2616);
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px 40px;
+}
+
+.screen {
+  width: min(960px, 100%);
+}
+
+.screen[hidden] {
+  display: none !important;
+}
+
+.paper-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 28%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 28px,
+      rgba(107, 68, 35, 0.03) 28px,
+      rgba(107, 68, 35, 0.03) 29px
+    ),
+    var(--paper);
+  border: 4px solid #5c3d2e;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), inset 0 0 0 6px #e8d7b0;
+  padding: 28px 28px 32px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--wood);
+  font-weight: 700;
+}
+
+.game-title {
+  font-family: var(--font-text);
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.1;
+  margin: 0 0 12px;
+  color: var(--forest-deep);
+}
+
+.lead {
+  font-family: var(--font-text);
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+.menu-animals {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  font-size: 42px;
+  margin-bottom: 22px;
+}
+
+.menu-card,
+.topics-card,
+.map-card,
+.medal-card,
+.finish-card {
+  text-align: center;
+}
+
+.menu-actions {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.btn {
+  appearance: none;
+  border: 3px solid var(--wood);
+  background: linear-gradient(#f0ddb4, #d7b57a);
+  color: var(--ink);
+  border-radius: 16px;
+  min-height: 60px;
+  padding: 12px 20px;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 4px 0 #4a2e16;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #4a2e16;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+}
+
+.btn-primary {
+  background: linear-gradient(#f0c14b, #d4922a);
+  border-color: #8a4b12;
+  color: #3a240c;
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.btn-tiny {
+  min-height: 42px;
+  font-size: 16px;
+  padding: 6px 12px;
+  box-shadow: 0 3px 0 #4a2e16;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px solid var(--wood);
+  background: #f3ead3;
+  font-size: 20px;
+}
+
+.linkish {
+  margin-top: 16px;
+  background: none;
+  border: 0;
+  color: var(--wood);
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+.screen-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.screen-head h2 {
+  margin: 0;
+  min-width: 0;
+  font-size: 24px;
+  overflow-wrap: anywhere;
+}
+
+.star-badge {
+  background: #fff4cc;
+  border: 2px solid #c9a227;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+}
+
+.topic-list {
+  display: grid;
+  gap: 12px;
+}
+
+.topic-btn {
+  text-align: left;
+  padding: 16px 18px;
+}
+
+.topic-btn small {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.topic-btn.is-locked {
+  opacity: 0.6;
+}
+
+.trail {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 12px;
+  position: relative;
+}
+
+.trail::before {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 18px;
+  bottom: 18px;
+  width: 6px;
+  background: linear-gradient(#c45c26, #e6a817, #2d5a3d);
+  border-radius: 99px;
+}
+
+.trail-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin: 0 0 10px;
+  padding: 0;
+  min-width: 0;
+}
+
+.trail-dot {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid var(--wood);
+  background: #f3ead3;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  z-index: 1;
+}
+
+.trail-btn {
+  text-align: left;
+  min-height: 56px;
+  min-width: 0;
+  font-size: 20px;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.trail-stop.is-locked .trail-btn {
+  opacity: 0.55;
+}
+
+.trail-stop.is-current .trail-dot {
+  background: #f0c14b;
+  box-shadow: 0 0 0 6px rgba(240, 193, 75, 0.35);
+}
+
+.trail-stop.is-done .trail-dot {
+  background: #d9f0c7;
+}
+
+.trail-stop.zone-many .trail-dot {
+  background: #d5e4f7;
+}
+
+.trail-stop.zone-many.is-done .trail-dot {
+  background: #c9f0e4;
+}
+
+.trail-stop.zone-valley .trail-dot {
+  background: #f3ddb8;
+}
+
+.trail-stop.zone-valley.is-done .trail-dot {
+  background: #f6c9a8;
+}
+
+.trail-stop.zone-friends .trail-dot {
+  background: #d7f0c8;
+}
+
+.trail-stop.zone-friends.is-done .trail-dot {
+  background: #b7e39a;
+}
+
+.trail-stop.zone-opposites .trail-dot {
+  background: #d9e4f8;
+}
+
+.trail-stop.zone-opposites.is-done .trail-dot {
+  background: #b9ccee;
+}
+
+.trail-stop.zone-forest .trail-dot {
+  background: #e7f0c9;
+}
+
+.trail-stop.zone-forest.is-done .trail-dot {
+  background: #cfe6a4;
+}
+
+.trail-stop.zone-roots .trail-dot {
+  background: #f0ddc0;
+}
+
+.trail-stop.zone-roots.is-done .trail-dot {
+  background: #e2c59a;
+}
+
+.trail-stop.zone-maze .trail-dot {
+  background: #eadcf4;
+}
+
+.trail-stop.zone-maze.is-done .trail-dot {
+  background: #d7c0ea;
+}
+
+.trail-stop.zone-workshop .trail-dot {
+  background: #f8e2c8;
+}
+
+.trail-stop.zone-workshop.is-done .trail-dot {
+  background: #f0c9a0;
+}
+
+.trail-bridge {
+  position: relative;
+  z-index: 1;
+  margin: 16px 0 16px 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #e7eef8;
+  color: #243656;
+  font-weight: 700;
+}
+
+.other-trail {
+  display: inline-block;
+  margin-top: 14px;
+}
+
+.medal-card,
+.finish-card {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.medal-icon {
+  font-size: 72px;
+  margin: 8px 0 12px;
+}
+
+.finish-stars {
+  font-size: 40px;
+  color: #c9a227;
+  margin: 8px 0 18px;
+}
+
+.medal-shelf {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.medal-shelf li {
+  background: #fff4cc;
+  border: 2px solid #c9a227;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .paper-card {
+    padding: 18px 14px 22px;
+  }
+
+  .btn {
+    font-size: 20px;
+  }
+
+  .trail::before {
+    left: 22px;
+  }
+
+  .trail-stop {
+    gap: 8px;
+  }
+
+  .trail-btn {
+    font-size: 17px;
+    padding: 8px 10px;
+  }
+}

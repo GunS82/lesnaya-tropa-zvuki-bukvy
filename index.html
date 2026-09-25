@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2d5a3d">
+  <title>Лесная тропа знаний — Звуки, буквы и алфавит</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Literata:opsz,wght@7..72,500;7..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <div class="forest-bg" aria-hidden="true">
+    <div class="sky"></div>
+    <div class="hills"></div>
+    <div class="trees"></div>
+    <div class="ground"></div>
+  </div>
+
+  <div id="app" class="app">
+    <section id="screen-menu" class="screen is-active" data-screen="menu">
+      <div class="menu-card paper-card">
+        <p class="eyebrow">Русский язык · 2 класс</p>
+        <h1 class="game-title">Лесная тропа знаний</h1>
+        <p class="lead">Узнай, чем звук отличается от буквы, пройди алфавитную тропу и научись писать имена с большой буквы.</p>
+        <div class="menu-animals" aria-hidden="true">
+          <span>🦉</span><span>🐿️</span><span>🦊</span>
+        </div>
+        <div class="menu-actions">
+          <button type="button" class="btn btn-primary" data-action="start">Начать путешествие</button>
+          <button type="button" class="btn btn-wood" data-action="continue" id="btn-continue" hidden>Продолжить</button>
+          <button type="button" class="btn btn-ghost" data-action="topics">Выбрать тему</button>
+        </div>
+        <button type="button" class="linkish" data-action="reset" id="btn-reset" hidden>Начать сначала</button>
+        <a class="linkish other-trail" href="https://guns82.github.io/lesnaya-tropa-znaniy/">Тропа «Предложение»</a>
+      </div>
+    </section>
+
+    <section id="screen-topics" class="screen" data-screen="topics" hidden>
+      <div class="paper-card topics-card">
+        <header class="screen-head">
+          <button type="button" class="btn btn-tiny" data-action="home">← Назад</button>
+          <h2>Выбери тему</h2>
+        </header>
+        <div id="topic-list" class="topic-list"></div>
+      </div>
+    </section>
+
+    <section id="screen-map" class="screen" data-screen="map" hidden>
+      <div class="paper-card map-card">
+        <header class="screen-head">
+          <button type="button" class="btn btn-tiny" data-action="home">← Меню</button>
+          <h2>Карта путешествия</h2>
+          <div class="star-badge" id="map-stars" title="Звёзды">★ 0</div>
+        </header>
+        <ol id="trail" class="trail"></ol>
+      </div>
+    </section>
+
+    <section id="screen-game" class="screen" data-screen="game" hidden>
+      <div class="paper-card game-card" id="game-card">
+        <header class="game-head">
+          <button type="button" class="btn btn-tiny" data-action="to-map">← Карта</button>
+          <p class="progress-label" id="progress-label">Задание 1 из 16</p>
+          <div class="game-tools">
+            <button type="button" class="icon-btn" data-action="speak" title="Прочитать задание">🔊</button>
+            <button type="button" class="icon-btn" id="btn-sound" data-action="toggle-sound" title="Звуки">🔔</button>
+          </div>
+        </header>
+        <div id="exercise" class="exercise"></div>
+        <aside class="assistant" id="assistant">
+          <div class="owl" aria-hidden="true">
+            <svg viewBox="0 0 80 80" width="72" height="72">
+              <ellipse cx="40" cy="46" rx="24" ry="26" fill="#7a4e2d"/>
+              <circle cx="28" cy="34" r="12" fill="#f3ead3"/>
+              <circle cx="52" cy="34" r="12" fill="#f3ead3"/>
+              <circle cx="28" cy="34" r="6" fill="#1e2a1c"/>
+              <circle cx="52" cy="34" r="6" fill="#1e2a1c"/>
+              <circle cx="30" cy="32" r="2" fill="#fff"/>
+              <circle cx="54" cy="32" r="2" fill="#fff"/>
+              <path d="M36 46 L40 54 L44 46 Z" fill="#e6a817"/>
+              <ellipse cx="18" cy="58" rx="8" ry="5" fill="#5c3d2e"/>
+              <ellipse cx="62" cy="58" rx="8" ry="5" fill="#5c3d2e"/>
+            </svg>
+          </div>
+          <p class="owl-speech" id="owl-speech"></p>
+        </aside>
+        <div class="game-footer" id="game-footer" hidden>
+          <button type="button" class="btn btn-primary" data-action="next">Дальше →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-medal" class="screen" data-screen="medal" hidden>
+      <div class="paper-card medal-card">
+        <p class="eyebrow">Награда</p>
+        <div class="medal-icon" id="medal-icon">🌳</div>
+        <h2 id="medal-title">Знаток предложения</h2>
+        <p id="medal-text">Ты прошёл важную часть тропы!</p>
+        <button type="button" class="btn btn-primary" data-action="medal-continue">Дальше</button>
+      </div>
+    </section>
+
+    <section id="screen-finish" class="screen" data-screen="finish" hidden>
+      <div class="paper-card finish-card">
+        <p class="eyebrow">Финиш</p>
+        <h2 id="finish-title">Тропа пройдена!</h2>
+        <p class="lead" id="finish-lead">Ты прошёл тропу.</p>
+        <div class="finish-stars" id="finish-stars">★★★</div>
+        <ul class="finish-notes" id="finish-notes"></ul>
+        <ul class="medal-shelf" id="medal-shelf"></ul>
+        <div class="menu-actions">
+          <button type="button" class="btn btn-primary" data-action="challenge">Проверь себя: 8 вопросов</button>
+          <button type="button" class="btn btn-primary" data-action="to-map">К карте</button>
+          <button type="button" class="btn btn-wood" data-action="home">В меню</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="data/content.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

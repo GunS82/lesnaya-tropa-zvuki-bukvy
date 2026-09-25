@@ -1,0 +1,47 @@
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes star-fly {
+  0% { opacity: 0; transform: scale(0.4) translateY(12px); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.3) translateY(-36px); }
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(240, 193, 75, 0.55); }
+  70% { box-shadow: 0 0 0 12px rgba(240, 193, 75, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(240, 193, 75, 0); }
+}
+
+.exercise {
+  animation: fade-in 0.35s ease;
+}
+
+.trail-stop.is-current .trail-dot {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+.star-pop {
+  animation: star-fly 0.9s ease forwards;
+}
+
+.medal-icon {
+  animation: fade-in 0.45s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
